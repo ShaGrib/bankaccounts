@@ -5,16 +5,18 @@ class User:
         self.email = email
         self.account = BankAccount()
     def make_deposit(self, amount):
-        print(f"{self.name} hands {amount} to the teller")
+        print(f"{self.name} hands ${amount} to the teller")
         self.account.deposit(amount)
         return self
     def make_withdrawal(self, amount):
-        print(f"{self.name} asks the teller for {amount} from the account")
+        print(f"{self.name} asks the teller for ${amount} from the account")
         self.account.withdraw(amount)
         return self
+    def ask_interest_approval(self):
+        print(f"{self.name} asks teller to approve interest")
+        self.account.yield_interest()
     def display_user_balance(self):
         print(f"{self.name} asks the teller to show the balance of the account")
-        self.account.yield_interest()
         self.account.display_account_info()
 
 # deposit(self, amount) - increases the account balance by the given amount
@@ -25,7 +27,7 @@ class User:
 # (as long as the balance is positive)
 
 class BankAccount:
-    def __init__(self, int_rate = 1.02, balance= 0): 
+    def __init__(self, int_rate = .02, balance= 0): 
         self.interest = int_rate
         self.balance = balance
         # don't worry about user info here; we'll involve the User class soon
@@ -39,13 +41,15 @@ class BankAccount:
         else:
             self.balance -= amount
         return self
-    def display_account_info(self):
-        print(f"Balance: ${(float(self.balance))}")
     def yield_interest(self):
         if self.balance >= 1:
-            float(self.balance)
-            self.balance *= self.interest
-            int(self.balance)
+            self.balance += self.balance * self.interest
+            print(f"Teller responds, telling you they can approve interest on your savings")
+        else:
+            print(f"Teller responds, telling you there is not enough funds in the account to approve the interest accrual")
+        return self
+    def display_account_info(self):
+        print(f"Balance: ${(float(round(self.balance, 2)))}")
         return self
     # def display_all_accounts(User):
     #     print(f"Accounts {User.account}")
@@ -61,6 +65,6 @@ monty.display_user_balance()
 armen.display_user_balance()
 
 guido.make_deposit(950).make_deposit(674).make_deposit(783).make_withdrawal(305).display_user_balance()
-monty.make_deposit(1000).make_deposit(2500).display_user_balance()
-armen.make_deposit(100).make_withdrawal(87).make_withdrawal(64).make_withdrawal(10).display_user_balance()
+monty.make_deposit(1000).make_deposit(2500).ask_interest_approval()
+armen.make_deposit(100).make_withdrawal(87).make_withdrawal(64).make_withdrawal(10).ask_interest_approval()
 
