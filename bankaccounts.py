@@ -15,9 +15,11 @@ class User:
     def ask_interest_approval(self):
         print(f"{self.name} asks teller to approve interest")
         self.account.yield_interest()
+        return self
     def display_user_balance(self):
         print(f"{self.name} asks the teller to show the balance of the account")
         self.account.display_account_info()
+        return self
 
 # deposit(self, amount) - increases the account balance by the given amount
 # withdraw(self, amount) - decreases the account balance by the given amount if there are sufficient funds;
@@ -64,7 +66,8 @@ guido.display_user_balance()
 monty.display_user_balance()
 armen.display_user_balance()
 
-guido.make_deposit(950).make_deposit(674).make_deposit(783).make_withdrawal(305).display_user_balance()
-monty.make_deposit(1000).make_deposit(2500).ask_interest_approval()
-armen.make_deposit(100).make_withdrawal(87).make_withdrawal(64).make_withdrawal(10).ask_interest_approval()
-
+guido.make_deposit(950).make_deposit(674).make_deposit(783).make_withdrawal(305).ask_interest_approval().display_user_balance()
+# monty.make_deposit(1000).make_deposit(2500).ask_interest_approval()
+# monty.display_user_balance()
+# armen.make_deposit(100).make_withdrawal(87).make_withdrawal(64).make_withdrawal(10).ask_interest_approval()
+# armen.display_user_balance()
